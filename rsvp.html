@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>RSVP — Jess & Conner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --ink: #1e3a8a;
+      --paper: #ffffff;
+      --paper-shadow: #f3f3ee;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--paper);
+      position: relative;
+      padding: 48px 32px;
+    }
+    /* Rough border via SVG */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(var(--ink), var(--ink)) top/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) bottom/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) left/12px 100% no-repeat,
+        linear-gradient(var(--ink), var(--ink)) right/12px 100% no-repeat;
+      filter: url(#roughen);
+      pointer-events: none;
+    }
+    h1 {
+      font-family: 'Potta One', serif;
+      font-weight: 400;
+      font-size: clamp(36px, 8vw, 56px);
+      text-align: center;
+      margin: 0 0 8px 0;
+      letter-spacing: 0.02em;
+      filter: url(#roughen);
+    }
+    .subtitle {
+      text-align: center;
+      font-family: 'Potta One', serif;
+      font-size: 18px;
+      margin: 0 0 32px 0;
+      opacity: 0.85;
+    }
+    label {
+      display: block;
+      font-family: 'Potta One', serif;
+      font-size: 18px;
+      margin: 20px 0 8px 0;
+      letter-spacing: 0.04em;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      padding: 12px 14px;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+      border-radius: 0;
+      filter: url(#roughen);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    input:focus, textarea:focus {
+      background: var(--paper-shadow);
+    }
+    .radio-group, .yesno-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .yesno-group {
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .pill {
+      flex: 1;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      cursor: pointer;
+      font-family: 'Potta One', serif;
+      font-size: 20px;
+      user-select: none;
+      filter: url(#roughen);
+      transition: background 0.1s, color 0.1s;
+    }
+    .pill:hover { background: var(--paper-shadow); }
+    .pill input { position: absolute; opacity: 0; pointer-events: none; }
+    .pill.selected {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .submit {
+      display: block;
+      width: 100%;
+      margin-top: 32px;
+      padding: 18px;
+      font-family: 'Potta One', serif;
+      font-size: 24px;
+      letter-spacing: 0.05em;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      cursor: pointer;
+      filter: url(#roughen);
+    }
+    .submit:hover { opacity: 0.92; }
+    .submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .back {
+      display: inline-block;
+      margin-bottom: 16px;
+      font-family: 'Potta One', serif;
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.7;
+    }
+    .back:hover { opacity: 1; }
+    .error {
+      color: #b91c1c;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+    .error.show { display: block; }
+    .conditional { display: none; }
+    .conditional.show { display: block; }
+    .hint {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden SVG defs for roughen filter -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="roughen">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page">
+    <div class="card">
+      <a href="index.html" class="back">← back to invite</a>
+      <h1>RSVP</h1>
+      <p class="subtitle">Jess &amp; Conner · June 13</p>
+
+      <div>
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required />
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required />
+      </div>
+
+      <div>
+        <label>Can you make it?</label>
+        <div class="yesno-group" id="attendingGroup">
+          <label class="pill" data-value="yes">
+            <input type="radio" name="attending" value="yes" />
+            YES 🎉
+          </label>
+          <label class="pill" data-value="no">
+            <input type="radio" name="attending" value="no" />
+            NO 😢
+          </label>
+        </div>
+      </div>
+
+      <div class="conditional" id="plusOneSection">
+        <label>Bringing a +1?</label>
+        <div class="yesno-group" id="plusOneGroup">
+          <label class="pill" data-value="yes">
+            <input type="radio" name="plusOne" value="yes" />
+            Yes
+          </label>
+          <label class="pill" data-value="no">
+            <input type="radio" name="plusOne" value="no" />
+            No
+          </label>
+        </div>
+
+        <div id="plusOneNameWrap" class="conditional">
+          <label for="plusOneName">Their name</label>
+          <input type="text" id="plusOneName" name="plusOneName" />
+        </div>
+
+        <label for="dietary">Dietary restrictions or allergies?</label>
+        <textarea id="dietary" name="dietary" placeholder="Vegetarian, gluten-free, none, etc."></textarea>
+      </div>
+
+      <div class="error" id="errorMsg">Please answer all required fields.</div>
+
+      <button type="button" class="submit" id="submitBtn">SUBMIT RSVP</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // CONFIG: paste your Google Apps Script web app URL here
+    // ============================================================
+    const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+
+    // Pill selection UX
+    function wirePillGroup(groupEl) {
+      const pills = groupEl.querySelectorAll('.pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          // Don't double-fire when clicking the hidden input
+          e.preventDefault();
+          pills.forEach(p => p.classList.remove('selected'));
+          pill.classList.add('selected');
+          const input = pill.querySelector('input');
+          input.checked = true;
+          // Fire change event so listeners react
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    }
+    wirePillGroup(document.getElementById('attendingGroup'));
+    wirePillGroup(document.getElementById('plusOneGroup'));
+
+    // Show plus-one + dietary only if attending = yes
+    const attendingInputs = document.querySelectorAll('input[name="attending"]');
+    const plusOneSection = document.getElementById('plusOneSection');
+    attendingInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        if (input.value === 'yes' && input.checked) {
+          plusOneSection.classList.add('show');
+        } else if (input.value === 'no' && input.checked) {
+          plusOneSection.classList.remove('show');
+        }
+      });
+    });
+
+    // Show plus-one name only if +1 = yes
+    const plusOneInputs = document.querySelectorAll('input[name="plusOne"]');
+    const plusOneNameWrap = document.getElementById('plusOneNameWrap');
+    plusOneInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        if (input.value === 'yes' && input.checked) {
+          plusOneNameWrap.classList.add('show');
+        } else {
+          plusOneNameWrap.classList.remove('show');
+        }
+      });
+    });
+
+    // Submit
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    submitBtn.addEventListener('click', async () => {
+      errorMsg.classList.remove('show');
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const attending = document.querySelector('input[name="attending"]:checked')?.value;
+
+      if (!name || !email || !attending) {
+        errorMsg.textContent = 'Please fill in name, email, and whether you can come.';
+        errorMsg.classList.add('show');
+        return;
+      }
+
+      const payload = {
+        name,
+        email,
+        attending,
+        plusOne: document.querySelector('input[name="plusOne"]:checked')?.value || '',
+        plusOneName: document.getElementById('plusOneName').value.trim(),
+        dietary: document.getElementById('dietary').value.trim(),
+        timestamp: new Date().toISOString(),
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SENDING...';
+
+      // Stash answers locally so the next page can read them (and so we
+      // don't lose the response if the network call fails)
+      try {
+        sessionStorage.setItem('rsvp', JSON.stringify(payload));
+      } catch (e) { /* ignore */ }
+
+      try {
+        // Apps Script doPost — using text/plain to avoid CORS preflight
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+        });
+      } catch (err) {
+        // We still redirect — Apps Script with no-cors won't return readable
+        // status. If it truly failed, the user has already filled the form
+        // and we'll have it in sessionStorage as a fallback.
+        console.error('Submit error:', err);
+      }
+
+      // Route to the correct confirmation page
+      if (attending === 'yes') {
+        window.location.href = 'yes.html';
+      } else {
+        window.location.href = 'no.html';
+      }
+    });
+  </script>
+</body>
+</html>

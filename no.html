@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>We'll miss you — Jess & Conner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --ink: #1e3a8a;
+      --paper: #ffffff;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 520px;
+      padding: 64px 32px;
+      position: relative;
+      text-align: center;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(var(--ink), var(--ink)) top/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) bottom/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) left/12px 100% no-repeat,
+        linear-gradient(var(--ink), var(--ink)) right/12px 100% no-repeat;
+      filter: url(#roughen);
+      pointer-events: none;
+    }
+    .frown {
+      font-family: 'Potta One', serif;
+      font-size: 96px;
+      margin: 0 0 16px 0;
+      line-height: 1;
+      filter: url(#roughen);
+    }
+    h1 {
+      font-family: 'Potta One', serif;
+      font-weight: 400;
+      font-size: clamp(32px, 7vw, 48px);
+      margin: 0 0 16px 0;
+      line-height: 1.1;
+      filter: url(#roughen);
+    }
+    p {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="roughen">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page">
+    <div class="card">
+      <div class="frown">:(</div>
+      <h1>WE'LL<br>MISS YOU</h1>
+      <p>Thanks for letting us know. Catch you soon. 💙</p>
+    </div>
+  </div>
+</body>
+</html>

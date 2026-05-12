@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>See you there! — Jess & Conner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --ink: #1e3a8a;
+      --paper: #ffffff;
+      --paper-shadow: #f3f3ee;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 600px;
+      padding: 56px 32px;
+      position: relative;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(var(--ink), var(--ink)) top/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) bottom/100% 12px no-repeat,
+        linear-gradient(var(--ink), var(--ink)) left/12px 100% no-repeat,
+        linear-gradient(var(--ink), var(--ink)) right/12px 100% no-repeat;
+      filter: url(#roughen);
+      pointer-events: none;
+    }
+    h1 {
+      font-family: 'Potta One', serif;
+      font-weight: 400;
+      font-size: clamp(40px, 9vw, 64px);
+      text-align: center;
+      margin: 0 0 8px 0;
+      line-height: 1.05;
+      filter: url(#roughen);
+    }
+    .kicker {
+      font-family: 'Potta One', serif;
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      margin: 0 0 32px 0;
+      opacity: 0.85;
+    }
+    .detail-block {
+      margin: 28px 0;
+      padding-bottom: 24px;
+      border-bottom: 3px solid var(--ink);
+      filter: url(#roughen);
+    }
+    .detail-block:last-of-type { border-bottom: none; }
+    .detail-label {
+      font-family: 'Potta One', serif;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+    .detail-value {
+      font-family: 'Potta One', serif;
+      font-size: clamp(22px, 5vw, 30px);
+      line-height: 1.2;
+    }
+    .body-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .cal-button {
+      display: block;
+      width: 100%;
+      margin-top: 32px;
+      padding: 20px;
+      font-family: 'Potta One', serif;
+      font-size: 22px;
+      letter-spacing: 0.05em;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      filter: url(#roughen);
+    }
+    .cal-button:hover { opacity: 0.92; }
+    .footer-note {
+      text-align: center;
+      margin-top: 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="roughen">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page">
+    <div class="card">
+      <p class="kicker">YOU'RE IN</p>
+      <h1>SEE YOU<br>THERE!</h1>
+
+      <div class="detail-block">
+        <div class="detail-label">WHEN</div>
+        <div class="detail-value">Saturday, June 13, 2026<br>7:00 PM</div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-label">WHERE</div>
+        <div class="detail-value">914 N Barton St</div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-label">PARKING & ENTRY</div>
+        <p class="body-text">
+          [Placeholder — Jess to fill in. Parking notes, which door to use,
+          buzzer code, gate access, etc.]
+        </p>
+      </div>
+
+      <button type="button" class="cal-button" id="addToCalBtn">+ ADD TO CALENDAR</button>
+
+      <p class="footer-note">Can't wait to celebrate with you 💍</p>
+    </div>
+  </div>
+
+  <script>
+    // Generate and download an .ics calendar file
+    document.getElementById('addToCalBtn').addEventListener('click', () => {
+      // June 13, 2026 at 7:00 PM local time
+      // For .ics we need UTC. The host is in DC area (Eastern). June = EDT (UTC-4).
+      // 7pm EDT = 23:00 UTC
+      // Using floating local time (no Z, no TZID) is the most portable for a single-event invite
+      const dtStart = '20260613T190000';
+      const dtEnd   = '20260613T230000'; // 4hr default block; no end time was requested but ics needs one
+      const uid = 'jess-conner-engagement-' + Date.now() + '@jc-ep-invite';
+      const now = new Date();
+      const dtStamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//JC Engagement//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        'UID:' + uid,
+        'DTSTAMP:' + dtStamp,
+        'DTSTART:' + dtStart,
+        'DTEND:' + dtEnd,
+        'SUMMARY:Jess & Conner\'s Engagement Party',
+        'DESCRIPTION:Celebrating Jess & Conner! 🎉',
+        'LOCATION:914 N Barton St',
+        'ORGANIZER;CN=Jessica Sourbeer:mailto:jessicasourbeer@gmail.com',
+        'END:VEVENT',
+        'END:VCALENDAR',
+      ].join('\r\n');
+
+      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'jess-conner-engagement.ics';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
