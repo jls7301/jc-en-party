@@ -11,7 +11,7 @@ The RSVP form needs somewhere to send responses. Apps Script is free.
 3. In that sheet: **Extensions → Apps Script**
 4. Delete any boilerplate `function myFunction() {}` code
 5. Open `apps-script.gs` from this repo, copy ALL of it, paste into the Apps Script editor
-6. Click the 💾 **Save** icon (cmd/ctrl + S works too)
+6. Click the **Save** icon (cmd/ctrl + S works too)
 7. Click **Deploy → New deployment**
 8. Click the gear icon next to "Select type" → choose **Web app**
 9. Fill in:

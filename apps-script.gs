@@ -52,8 +52,8 @@ function doPost(e) {
 
     // Email notification
     const subject = payload.attending === 'yes'
-      ? `🎉 ${payload.name} is coming!`
-      : `😢 ${payload.name} can't make it`;
+      ? `${payload.name} is coming to the engagement party`
+      : `${payload.name} can't make the engagement party`;
 
     const body = [
       `Name: ${payload.name}`,
