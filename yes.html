@@ -65,21 +65,21 @@
       margin: 0 0 32px 0;
       opacity: 0.85;
     }
-    .kicker2 {
-      font-family: 'Potta One', serif;
-      text-align: center;
-      font-size: 15px;
-      letter-spacing: 0.1em;
-      margin: 0 0 32px 0;
-      opacity: 0.85;
-    }
     .detail-block {
       margin: 28px 0;
       padding-bottom: 24px;
-      border-bottom: 3px solid var(--ink);
+      position: relative;
+    }
+    .detail-block:not(:last-of-type)::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--ink);
       filter: url(#roughen);
     }
-    .detail-block:last-of-type { border-bottom: none; }
     .detail-label {
       font-family: 'Potta One', serif;
       font-size: 14px;
@@ -94,8 +94,16 @@
     }
     .body-text {
       font-family: 'Inter', sans-serif;
-      font-size: 15px;
+      font-size: 17px;
       line-height: 1.55;
+      margin-top: 4px;
+    }
+    .details-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+      text-align: left;
     }
     .cal-button {
       display: block;
@@ -140,7 +148,7 @@
 
       <div class="detail-block">
         <div class="detail-label">WHEN</div>
-        <div class="detail-value">Saturday, June 13, 2026<br>7:00 PM</div>
+        <div class="detail-value">Saturday, June 13, 2026<br>7:00 - 9:30 PM</div>
       </div>
 
       <div class="detail-block">
@@ -151,8 +159,8 @@
 
       <div class="detail-block">
         <div class="detail-label">DETAILS</div>
-        <p class="kicker2">
-          *  Free street parking is available  *  The closest Metro stop is Court House, which is a 15 minute walk to Lyn & Rob's  *  No gifts please, your presence is present enough *
+        <p class="details-text">
+          Free street parking is available. The closest Metro stop is Court House, a 15 minute walk to Lyn &amp; Rob's. No gifts please &mdash; your presence is present enough.
         </p>
       </div>
 
@@ -165,11 +173,9 @@
     // Generate and download an .ics calendar file
     document.getElementById('addToCalBtn').addEventListener('click', () => {
       // June 13, 2026 at 7:00 PM local time
-      // For .ics we need UTC. The host is in DC area (Eastern). June = EDT (UTC-4).
-      // 7pm EDT = 23:00 UTC
       // Using floating local time (no Z, no TZID) is the most portable for a single-event invite
       const dtStart = '20260613T190000';
-      const dtEnd   = '20260613T230000'; // 4hr default block; no end time was requested but ics needs one
+      const dtEnd   = '20260613T230000'; // 4hr default block
       const uid = 'jess-conner-engagement-' + Date.now() + '@jc-ep-invite';
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
